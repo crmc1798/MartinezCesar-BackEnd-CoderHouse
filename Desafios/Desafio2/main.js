@@ -28,6 +28,7 @@ class ProductManager{
                     }
                     newJsonData = JSON.stringify([...jsonData, product]);
                     await fs.promises.writeFile(this.products, newJsonData);
+                    return console.error("Product added successfully");
                 }
                 else{
                     return console.error("Product with missing information");
@@ -78,7 +79,7 @@ class ProductManager{
                 let newJsonData = jsonData.filter((item) => item.id !== id);
                 await fs.promises.writeFile(this.products, JSON.stringify(newJsonData));
                 //return console.error(newJsonData);
-                return console.log("Removed product");
+                return console.log("Removed product successfully");
             } else {
                 return console.error("Not Found");
             }
@@ -88,7 +89,7 @@ class ProductManager{
         }
     }
 
-    async updayeProduct(id,product){
+    async updateProduct(id,product){
         try {
             const data = await fs.promises.readFile(this.products, "utf-8");
             const jsonData = JSON.parse(data);
@@ -106,7 +107,7 @@ class ProductManager{
                     itemId.code = product.code;
                     itemId.stock = product.stock;
                     await fs.promises.writeFile(this.products, JSON.stringify(jsonData)); 
-                    return console.log("updated product");
+                    return console.log("updated product successfully");
                 } 
                 else {
                     return console.error("Product with missing information");
@@ -206,7 +207,7 @@ const productosSimRacing = new ProductManager("./products.txt");
 
 //5-Despues se llama al metodo updateProduct para modificar el segundo elemento del arreglo, usando como entrada el id del elemento y un nuevo objeto con los valores actualizados.
 
-    //productosSimRacing.updayeProduct(2,ActualizacionDeProducto);
+    //productosSimRacing.updateProduct(5,ActualizacionDeProducto);
 
 
 //6.-A continuacion se hace uso del metodo deleteProduct para eleminar el cuarto elemento del arreglo que se sabe que existe un quinto que se sabe que no existe para mostrar un error.
