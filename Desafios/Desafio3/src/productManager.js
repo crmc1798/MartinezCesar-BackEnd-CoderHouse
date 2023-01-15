@@ -40,6 +40,7 @@ class ProductManager{
         } 
         catch (error) { 
             console.error(error);
+            return error;
         }
     }
  
@@ -47,10 +48,12 @@ class ProductManager{
         try {
             const data = await fs.promises.readFile(this.products, "utf-8");
             const jsonData = JSON.parse(data);
-            return console.log(jsonData);
+            console.log(jsonData);
+            return jsonData;
         } 
         catch (error) {
-            return console.error(error);
+            console.error(error);
+            return error;
         }
     }
 
@@ -62,11 +65,13 @@ class ProductManager{
         if (itemId === undefined) {
             return console.error("Not Found");
         } else {
-            return console.log(itemId);
+            console.log(itemId);
+            return itemId;
         }
         } 
         catch (error) {
-            return console.error(error);
+            console.error(error);
+            return error;
         }
     }
 
@@ -85,7 +90,8 @@ class ProductManager{
             }
         } 
         catch (error) {
-            return console.error(error);
+            console.error(error);
+            return error;
         }
     }
 
@@ -117,7 +123,8 @@ class ProductManager{
             
         } 
         catch (error) {
-            return console.error(error);
+            console.error(error);
+            return error;
         }
     }
 }
@@ -167,51 +174,6 @@ const producto5 = {
     stock: 10 
 }
 
-const producto6 = {
-    title: "Trustmaster t150 v2", 
-    description: "Gaming Steering Wheel updated version", 
-    price: 7000, 
-    thumbnail: "https://www.discoazul.com/uploads/media/images/t150rs-ps.jpg", 
-    code: "A-0060-Z", 
-    stock: 25 
-}
-
-const producto7 = {
-    title: "Trustmaster TMX v2", 
-    description: "Gaming Steering Wheel updated version", 
-    price: 7000, 
-    thumbnail: "https://c1.neweggimages.com/ProductImage/26-606-035-S03.jpg", 
-    code: "A-0070-Z", 
-    stock: 25 
-}
-
-const producto8 = {
-    title: "Trustmaster t300 v2", 
-    description: "Gaming Steering Wheel updated version", 
-    price: 7000, 
-    thumbnail: "https://m.media-amazon.com/images/I/81eiBUipVVL.jpg", 
-    code: "A-0080-Z", 
-    stock: 25 
-}
-
-const producto9 = {
-    title: "logitech g29 v2", 
-    description: "Gaming Steering Wheel updated version", 
-    price: 7000, 
-    thumbnail: "https://tiendasarcadia.com/wp-content/uploads/nc/p/1/7/1/6/7/17167.jpg", 
-    code: "A-0090-Z", 
-    stock: 25 
-}
-
-const producto10 = {
-    title: "logitech g920 v2", 
-    description: "Gaming Steering Wheel updated version", 
-    price: 7000, 
-    thumbnail: "https://m.media-amazon.com/images/I/713hqmmfGSL._AC_SY450_.jpg", 
-    code: "A-0100-Z", 
-    stock: 25 
-}
-
 const ActualizacionDeProducto = {
     title: "titulo actualizado", 
     description: "Descripccion actualizada", 
@@ -221,46 +183,4 @@ const ActualizacionDeProducto = {
     stock: 1234 
 }
 
-//Proceso de testing
-//Para probar cada metodo es necesario comentar y descomentar las lineas indentadas segun los pasos 
-
-//primero se crea una instancia de la clase ProdctManager.
-const productosSimRacing = new ProductManager("./products.txt");
-
-//1.-Se llama a la instancia getProducts y regresa un arreglo vacio.
-
-    productosSimRacing.getProducts();
-
-
-//2.-Despues se agregan 4 productos uyno por uno con la instancia addProduct, cada uno se agrega con un id unico.
-
-    // productosSimRacing.addProduct(producto10);
-    // productosSimRacing.addProduct(producto2);
-    // productosSimRacing.addProduct(producto3);
-    // productosSimRacing.addProduct(producto4);
-
-
-//3-De nuevo se llama a la instancia getProducts donde devuelve los 4 elementos agregados anteriormente.
-
-    //productosSimRacing.getProducts();
-
-
-//4.-Se llama a la instancia getProductById primero a un elemento que se sabe ue existe dentro del arreglo para que lo despliegue y despues uno que no.
-
-    //productosSimRacing.getProductById(3);//Elemento existente en el arreglo
-    //productosSimRacing.getProductById(5);//Elemento que no existe en el arreglo
-
-//5-Despues se llama al metodo updateProduct para modificar el segundo elemento del arreglo, usando como entrada el id del elemento y un nuevo objeto con los valores actualizados.
-
-    //productosSimRacing.updateProduct(5,ActualizacionDeProducto);
-
-
-//6.-A continuacion se hace uso del metodo deleteProduct para eleminar el cuarto elemento del arreglo que se sabe que existe un quinto que se sabe que no existe para mostrar un error.
-
-    //productosSimRacing.deleteById(4);
-    //productosSimRacing.deleteById(5);
-
-
-//7.-Por ultimo se hace uso del metodo getProducts para desplegar el arreglo de productos actualizado despues ded los ultmos pasos, donde se actualiza un producto y se elimina otro.
-
-    //productosSimRacing.getProducts();
+module.exports = {ProductManager};
