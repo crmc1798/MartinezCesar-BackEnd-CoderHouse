@@ -128,7 +128,9 @@ const producto1 = {
     price: 5000, 
     thumbnail: "https://www.discoazul.com/uploads/media/images/t150rs-ps.jpg", 
     code: "A-0010-Z", 
-    stock: 10 
+    stock: 10,
+    status: true,
+    category: "Sim racing"
 }
 
 const producto2 = {
@@ -137,7 +139,9 @@ const producto2 = {
     price: 5000, 
     thumbnail: "https://c1.neweggimages.com/ProductImage/26-606-035-S03.jpg", 
     code: "A-0020-Z", 
-    stock: 10 
+    stock: 10,
+    status: true,
+    category: "Sim racing" 
 }
 
 const producto3 = {
@@ -146,7 +150,9 @@ const producto3 = {
     price: 5000, 
     thumbnail: "https://m.media-amazon.com/images/I/81eiBUipVVL.jpg", 
     code: "A-0030-Z", 
-    stock: 10 
+    stock: 10,
+    status: true,
+    category: "Sim racing" 
 }
 
 const producto4 = {
@@ -155,7 +161,9 @@ const producto4 = {
     price: 5000, 
     thumbnail: "https://tiendasarcadia.com/wp-content/uploads/nc/p/1/7/1/6/7/17167.jpg", 
     code: "A-0040-Z", 
-    stock: 10 
+    stock: 10,
+    status: true,
+    category: "Sim racing" 
 }
 
 const producto5 = {
@@ -164,7 +172,9 @@ const producto5 = {
     price: 5000, 
     thumbnail: "https://m.media-amazon.com/images/I/713hqmmfGSL._AC_SY450_.jpg", 
     code: "A-0050-Z", 
-    stock: 10 
+    stock: 10,
+    status: true,
+    category: "Sim racing" 
 }
 
 const producto6 = {
@@ -173,7 +183,9 @@ const producto6 = {
     price: 7000, 
     thumbnail: "https://www.discoazul.com/uploads/media/images/t150rs-ps.jpg", 
     code: "A-0060-Z", 
-    stock: 25 
+    stock: 25,
+    status: true,
+    category: "Sim racing" 
 }
 
 const producto7 = {
@@ -182,7 +194,9 @@ const producto7 = {
     price: 7000, 
     thumbnail: "https://c1.neweggimages.com/ProductImage/26-606-035-S03.jpg", 
     code: "A-0070-Z", 
-    stock: 25 
+    stock: 25,
+    status: true,
+    category: "Sim racing" 
 }
 
 const producto8 = {
@@ -191,7 +205,9 @@ const producto8 = {
     price: 7000, 
     thumbnail: "https://m.media-amazon.com/images/I/81eiBUipVVL.jpg", 
     code: "A-0080-Z", 
-    stock: 25 
+    stock: 25,
+    status: true,
+    category: "Sim racing" 
 }
 
 const producto9 = {
@@ -200,7 +216,9 @@ const producto9 = {
     price: 7000, 
     thumbnail: "https://tiendasarcadia.com/wp-content/uploads/nc/p/1/7/1/6/7/17167.jpg", 
     code: "A-0090-Z", 
-    stock: 25 
+    stock: 25,
+    status: true,
+    category: "Sim racing" 
 }
 
 const producto10 = {
@@ -209,7 +227,9 @@ const producto10 = {
     price: 7000, 
     thumbnail: "https://m.media-amazon.com/images/I/713hqmmfGSL._AC_SY450_.jpg", 
     code: "A-0100-Z", 
-    stock: 25 
+    stock: 25,
+    status: true,
+    category: "Sim racing" 
 }
 
 const ActualizacionDeProducto = {

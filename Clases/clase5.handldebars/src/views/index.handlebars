@@ -1,0 +1,19 @@
+<h1>hola {{user.name}}</h1>
+
+<h3>Bienvenidos a handlebars</h1>
+<p>Esto es un layout, com esta el clima en {{user.country}}</p>
+
+{{#if isAdmin}}
+{{#each foods}}
+
+<p>producto {{this.name}}</p>
+<p>precio {{this.price}}</p>
+
+{{/each}}
+
+{{else}}
+<h3>lo siento no eres administrador</h3>
+
+{{/if}}
+
+<script src="/index.js"></script>
