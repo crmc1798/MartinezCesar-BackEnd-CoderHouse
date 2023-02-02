@@ -1,6 +1,7 @@
-<h1>Lista de productos</h1>
+<h1>Lista de productos en vivo</h1>
 
- {{#each data}}
+<div id="notliveProducts">
+{{#each getAll}}
     <div class="user-info">
       <span id="userInfo">
       <h2>{{this.title}}</h2>
@@ -15,6 +16,9 @@
       </span>
     </div>
   {{/each}}
+  </div>
+
+ <div id="liveProducts"></div>
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/index.js"></script>

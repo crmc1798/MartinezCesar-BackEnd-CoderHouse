@@ -4,7 +4,8 @@ const {Server} = require('socket.io');
 const morgan = require('morgan');
 const router = require("./router");
 
-const port = 8082;
+const port = 8080;
+
 const app = express();
 
 app.use(express.json());
@@ -16,18 +17,26 @@ app.set('views', __dirname + '/views');
 
 router(app);
 
+app.get('/',  (req, res) => {
+    res.render('index.handlebars', {mesagge: 'Hi from server without socket.io'});
+});
+
 const httpServer = app.listen(port, () => {
     console.log(`Server runing at port ${port}`)
 });
 
-const io = new Server(httpServer);
+global.io = new Server(httpServer);
+
 
 io.on('connection', socket => {
     console.log(`New client with id ${socket.id}`);
 
-    socket.emit('data-update', count);
+    socket.on('statusProductsList', data => {
+        console.log(data);
+    })
 
     socket.on('disconnect', () => {
         console.log('socket disconnected');
       });
 });
+
