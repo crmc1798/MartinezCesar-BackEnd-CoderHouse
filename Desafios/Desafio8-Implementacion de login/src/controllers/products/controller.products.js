@@ -3,9 +3,17 @@ const { MongoProductManager } = require('../../dao/mongoClassManagers/productsCl
 const productsMongo = new MongoProductManager();
 const router = Router();
 
-router.get('/', async (req, res) => {
+const privateAcces = (req, res, next) => {
+    if(!req.session.user){
+        return res.redirect("/login")
+    }
+    next();
+}
+
+router.get('/', privateAcces, async (req, res) => {
     try {
 
+        const { user } = req.session;
         let linkMold = req.protocol + '://' + req.get('host') + '/api/products/';
         let limit;
         let page;
@@ -97,7 +105,7 @@ router.get('/', async (req, res) => {
             nextLink: nextLink,
             linkMold: linkMold
         };
-        res.status(500).render('products',{respuestaInfo: respuestaInfo}); 
+        res.status(500).render('products',{respuestaInfo: respuestaInfo, user}); 
         //res.status(200).json({ mesagge: { respuestaInfo } });
 
     } catch (error) {

@@ -5,10 +5,11 @@ const mongoConfig = require("./config/mongoConfig/config.mongo");
 const cookieParser = require('cookie-parser');
 const { port } = require('./config');
 
+mongoConfig(app);
 router(app);
 app.use(cookieParser(false));
 handlebarsConfig(app);
-mongoConfig();
+
 
 app.get('/',  (req, res) => {
     res.render('index', {mesagge: 'Hi from server without socket.io'});

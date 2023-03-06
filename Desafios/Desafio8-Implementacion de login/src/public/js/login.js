@@ -25,6 +25,5 @@ form.addEventListener("submit", (e) => {
     .then(data => console.log(data))
     //.then(productsLink.click())
     .catch(err => console.log(err))
-    setTimeout(()=>{productsLink.click()}, 1000);
-    
+    setTimeout(()=>{productsLink.click()}, 1000); 
 })

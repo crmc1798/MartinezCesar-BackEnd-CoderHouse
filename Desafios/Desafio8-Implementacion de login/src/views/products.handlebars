@@ -2,8 +2,15 @@
     <header>
         <button><a href={{respuestaInfo.prevLink}}>prevLink</a></button>
         <button><a href={{respuestaInfo.nextLink}}>nextLink</a></button>
+        <a href="/auth/logout"><button>Logout</button> </a>
     </header>
     
+    
+    <div id="cartel">
+        <h1>¡Bienvenido/a {{user.first_name}} {{user.last_name}}!</h1>
+        <h3>Eres: {{user.role}}</h3>
+
+    </div>
     
     <div class="lista">
         {{#each respuestaInfo.playload}}

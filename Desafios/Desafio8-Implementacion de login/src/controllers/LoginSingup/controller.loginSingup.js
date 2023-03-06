@@ -2,11 +2,18 @@ const { Router } = require("express");
 
 const router = Router();
 
-router.get("/signup", (req, res) => {
+const publicAcces = (req, res, next) => {
+    if(req.session.user){
+        return res.redirect("/api/products")
+    }
+    next();
+}
+
+router.get("/signup", publicAcces,(req, res) => {
     res.render("signup")
 });
 
-router.get("/login", (req, res) => {
+router.get("/login", publicAcces,(req, res) => {
     res.render("login")
 });
 
