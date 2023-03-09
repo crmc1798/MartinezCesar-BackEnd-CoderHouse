@@ -1,0 +1,27 @@
+<div id="products">
+    <header>
+        <button><a href={{respuestaInfo.prevLink}}>prevLink</a></button>
+        <button><a href={{respuestaInfo.nextLink}}>nextLink</a></button>
+        <a href="/auth/logout"><button>Logout</button> </a>
+    </header>
+    
+    
+    <div id="cartel">
+        <h1>¡Bienvenido/a {{user.first_name}} {{user.last_name}}!</h1>
+        <h3>Eres: {{user.role}}</h3>
+
+    </div>
+    
+    <div class="lista">
+        {{#each respuestaInfo.playload}}
+        <div class="user-info">
+      <span id="userInfo">
+      <h2>{{this.title}}</h2>
+      <p>price: {{this.price}}</p>
+      <button><a href={{../respuestaInfo.linkMold}}{{this.id}}/>Product details</a></button>
+      <button>Add to card</button>
+      </span>
+    </div>
+        {{/each}}
+    </div>
+</div>
