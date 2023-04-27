@@ -127,7 +127,7 @@ class ProductsRouter extends Route {
             }
         })
 
-        this.post('/', ['PUBLIC'], async (req, res) => {
+        this.post('/', ['ADMIN'], async (req, res) => {
             try {
                 const { title, description, price, thumbnail, code, stock, status, category } = req.body;
                 const newProduct = {
@@ -156,7 +156,7 @@ class ProductsRouter extends Route {
             }
         })
 
-        this.put('/:id', ['PUBLIC'], async (req, res) => {
+        this.put('/:id', ['ADMIN'], async (req, res) => {
             try {
                 const productId = req.params.id;
                 const { title, description, price, thumbnail, code, stock, status, category } = req.body;
@@ -187,7 +187,7 @@ class ProductsRouter extends Route {
             }
         })
 
-        this.delete('/:id', ['PUBLIC'], async (req, res) => {
+        this.delete('/:id', ['ADMIN'], async (req, res) => {
             try {
                 const productId = req.params.id;
                 const getById = await productsMongo.deleteById(productId);

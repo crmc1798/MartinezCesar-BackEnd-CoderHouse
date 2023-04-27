@@ -1,9 +1,15 @@
+const {v4: uuidv4} = require('uuid')
+
+const ticketsModel = require('../../dao/models/tickets.model');
+const userModel = require('../../dao/models/user.model');
 const { MongoCartManager } = require('../../dao/mongoClassManagers/cartsClass/cartMongoManager');
 const cartsMongo = new MongoCartManager();
 
 const { MongoProductManager } = require('../../dao/mongoClassManagers/productsClass/productMongoManager');
 const productsMongo = new MongoProductManager();
 const Route = require('../../router/Class.Router');
+
+
 
 class CartRouter extends Route {
     init() {
@@ -17,7 +23,7 @@ class CartRouter extends Route {
             }
         })
 
-        this.post('/', ['PUBLIC'], async (req, res) => {
+        this.post('/', ['USER'], async (req, res) => {
             try {
                 const createdCart = await cartsMongo.addCart({});
                 res.sendSuccess(createdCart);
@@ -40,7 +46,46 @@ class CartRouter extends Route {
             }
         })
 
-        this.post('/:cid/products/:pid', ['PUBLIC'], async (req, res) => {
+        this.get("/:cid/purchase", ["PUBLIC"], async (req, res) => {
+            try {
+                const { cid } = req.params;
+                const cart = await cartsMongo.getCartById(cid);
+                const productsToPurchase = cart.products;
+
+                const currentUser = await userModel.findOne({cart: cart._id});
+
+                const purchaseFilterAvailable = productsToPurchase.filter(p => p.product.stock !== 0);
+                const purchaseFilterUnavailable = productsToPurchase.filter(p => p.product.stock === 0);
+
+                purchaseFilterAvailable.forEach(async (p) => {
+                    const productToSell = await productsMongo.findById(p.product._id)
+                    productToSell.stock = productToSell.stock - p.quantity;
+                    await productsMongo.updateOne({_id: p.product._id}, productToSell);
+                })
+
+                const newTicketInfo = {
+                    code: uuidv4(),
+                    purchase_datatime: new Date().toLocaleString(),
+                    amount: purchaseFilterAvailable.reduce((acc, curr) => acc + curr.product.price*curr.quantity, 0),
+                    purchaser: currentUser.email
+                }
+
+                const newTicket = await ticketsModel.create(newTicketInfo);
+
+                if(newTicket){
+                    await cartManager.updateOne(cid, purchaseFilterUnavailable);
+                }
+
+                res.sendSuccess(newTicket);
+                
+                /**AGREGAR CASO DE COMPRA FALLIDA**/
+
+            } catch (error) {
+                throw error
+            }
+        })
+
+        this.post('/:cid/products/:pid', ['USER'], async (req, res) => {
             try {
                 const cartId = req.params.cid;
                 const productId = req.params.pid;
@@ -61,7 +106,7 @@ class CartRouter extends Route {
             }
         })
 
-        this.delete('/:cid/products/:pid', ['PUBLIC'], async (req, res) => {
+        this.delete('/:cid/products/:pid', ['USER'], async (req, res) => {
             try {
                 const cartId = req.params.cid;
                 const productId = req.params.pid;
@@ -84,7 +129,7 @@ class CartRouter extends Route {
             }
         })
 
-        this.delete('/:id', ['PUBLIC'], async (req, res) => {
+        this.delete('/:id', ['ADMIN'], async (req, res) => {
             try {
                 const cartId = req.params.id;
                 const getById = await cartsMongo.deleteById(cartId);
@@ -95,7 +140,7 @@ class CartRouter extends Route {
             }
         })
 
-        this.put('/:cid/products/:pid', ['PUBLIC'], async (req, res) => {
+        this.put('/:cid/products/:pid', ['USER'], async (req, res) => {
             try {
                 const { quantity } = req.body;
                 const cartId = req.params.cid;
