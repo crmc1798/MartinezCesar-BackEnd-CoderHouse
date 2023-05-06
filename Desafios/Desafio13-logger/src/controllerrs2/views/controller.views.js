@@ -3,7 +3,7 @@ const { MongoProductManager } = require('../../dao/mongoClassManagers/productsCl
 const productsMongo = new MongoProductManager();
 
 const publicAcces = (req, res, next) => {
-    if(req.session.user){
+    if (req.session.user) {
         return res.redirect("/products")
     }
     next();
@@ -38,7 +38,7 @@ class ViewsRouter extends Route {
 
         this.get('/login', ['PUBLIC'], (req, res) => {
             try {
-                if(req.session.user){
+                if (req.session.user) {
                     return res.status(200).redirect('/products')
                 }
                 res.status(200).render("login")
@@ -78,7 +78,7 @@ class ViewsRouter extends Route {
 
         this.get('/realTimeProducts', ['USER'], (req, res) => {
             try {
-                res.status(200).render('realTimeProducts.handlebars',  {} );
+                res.status(200).render('realTimeProducts.handlebars', {});
             }
             catch (error) {
                 res.sendServerError(`something went wrong ${error}`)
@@ -88,7 +88,7 @@ class ViewsRouter extends Route {
         this.get('/cart/:id', ['USER'], (req, res) => {
             try {
                 const cartId = req.params.id;
-                res.status(200).render('cart', {cartId});
+                res.status(200).render('cart', { cartId });
             }
             catch (error) {
                 res.sendServerError(`something went wrong ${error}`)
@@ -107,6 +107,42 @@ class ViewsRouter extends Route {
         this.get('/profile', ['USER'], (req, res) => {
             try {
                 res.status(200).render('profile');
+            }
+            catch (error) {
+                res.sendServerError(`something went wrong ${error}`)
+            }
+        })
+
+        this.get('/loggerTest/:tipo', ['PUBLIC'], (req, res) => {
+            try {
+                const loggerType = req.params.tipo;
+                switch (loggerType) {
+                    case 'fatal':
+                        req.logger.fatal("logger fatal")
+                        break;
+                    case 'error':
+                        req.logger.error("logger error")
+                        break;
+
+                    case 'warning':
+                        req.logger.warning("logger warning")
+                        break;
+
+                    case 'info':
+                        req.logger.info("logger info")
+                        break;
+
+                    case 'http':
+                        req.logger.http("logger http")
+                        break;
+
+                    case 'debug':
+                        req.logger.debug("logger debug")
+                        break;
+                    default:
+                        break;
+                }
+                res.status(200).json({message: 'succes'});
             }
             catch (error) {
                 res.sendServerError(`something went wrong ${error}`)

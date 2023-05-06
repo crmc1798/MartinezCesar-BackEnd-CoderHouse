@@ -47,6 +47,7 @@ const initializePassport = () => {
           }
 
           if (user) {
+            req.logger.error("Usuario ya existente")
             return done(null, false);
           }
 

@@ -112,6 +112,7 @@ class ProductsRouter extends Route {
                 res.sendSuccess(respuestaInfo);
             }
             catch (error) {
+                req.logger.fatal("Poductos no encontrados")
                 res.sendServerError(`something went wrong ${error}`)
             }
         })
@@ -130,6 +131,7 @@ class ProductsRouter extends Route {
                 res.sendSuccess(getById);
             }
             catch (error) {
+                req.logger.error(error.cause)
                 res.sendServerError(`something went wrong ${error}`)
             }
         })
@@ -160,6 +162,7 @@ class ProductsRouter extends Route {
                 }
             }
             catch (error) {
+                req.logger.error(error.cause)
                 res.sendServerError(`something went wrong ${error}`)
             }
         })
@@ -192,6 +195,7 @@ class ProductsRouter extends Route {
                 }
             }
             catch (error) {
+                req.logger.error(error.cause)
                 res.sendServerError(`something went wrong ${error}`)
             }
         })

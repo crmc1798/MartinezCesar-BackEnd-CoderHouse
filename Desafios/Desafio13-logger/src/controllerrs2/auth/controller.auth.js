@@ -19,7 +19,8 @@ class AuthRouter extends Route {
         res.sendSuccess(req.user);
 
       } catch (error) {
-        res.sendServerError(`something went wrong ${error}`)
+        //res.sendServerError(`something went wrong ${error}`)
+        req.logger.error("Usuario no autenticado")
       }
 
     })

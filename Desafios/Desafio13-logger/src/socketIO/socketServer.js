@@ -7,6 +7,7 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 const router = require("../router");
 const cors = require('cors');
+const loggerMiddleware = require("../middlewares/logger.middlewares");
 
 const { MongoChatManager } = require('../dao/mongoClassManagers/chatClass/chatMongoManager');
 const chatMongo = new MongoChatManager();
@@ -18,6 +19,8 @@ app.use(cors())
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/../public"));
+
+app.use(loggerMiddleware)
 
 global.io = io;
 
