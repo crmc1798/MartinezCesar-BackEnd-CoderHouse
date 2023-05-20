@@ -13,7 +13,8 @@ const userSchema = new mongoose.Schema({
     age: Number,
     role: {
         type: String,
-        require: true,
+        enum: ['USER', 'ADMIN', 'PREMIUM'],
+        default: 'USER',
     },
     password: {
         type: String,

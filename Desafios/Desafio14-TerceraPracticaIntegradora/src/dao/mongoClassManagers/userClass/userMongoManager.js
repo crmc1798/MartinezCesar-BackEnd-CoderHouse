@@ -1,5 +1,6 @@
 const userModel = require("../../models/user.model");
 
+
 class UserManager{
     createUser = async (newUser) => {
         try {
@@ -13,7 +14,6 @@ class UserManager{
         }
     }
 
-    
     findUser = async(user) => {
         try {
             const response = await userModel.findOne({email: user})
@@ -26,6 +26,24 @@ class UserManager{
     findByID = async(id) => {
         try {
             const response = await userModel.findById(id)
+            return response;
+        } catch (error) {
+            throw new Error(error)
+        }
+    }
+
+    updatePassword = async(email, newPassword) => {
+        try {
+            const response = await userModel.findOneAndUpdate({ email }, { password: newPassword })
+            return response;
+        } catch (error) {
+            throw new Error(error)
+        }
+    }
+
+    updateRole = async(email, newRole) => {
+        try {
+            const response = await userModel.findOneAndUpdate({ email }, { role: newRole })
             return response;
         } catch (error) {
             throw new Error(error)

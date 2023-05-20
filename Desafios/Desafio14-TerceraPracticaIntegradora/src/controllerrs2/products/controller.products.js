@@ -119,6 +119,7 @@ class ProductsRouter extends Route {
 
         this.get("/mockingproducts", ["PUBLIC"], (req, res) => {
             const products = createMock(100);
+            
             res.sendSuccess(products);
         })
 
@@ -200,7 +201,7 @@ class ProductsRouter extends Route {
             }
         })
 
-        this.delete('/:id', ['ADMIN'], async (req, res) => {
+        this.delete('/:id', ['ADMIN, PREMIUM'], async (req, res) => {
             try {
                 const productId = req.params.id;
                 const getById = await productsMongo.deleteById(productId);

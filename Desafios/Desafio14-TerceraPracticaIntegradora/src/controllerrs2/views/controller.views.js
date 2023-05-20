@@ -113,6 +113,40 @@ class ViewsRouter extends Route {
             }
         })
 
+        this.get('/waitting', ['PUBLIC'], (req, res) => {
+            try {
+                res.status(200).render('waitting');
+            }
+            catch (error) {
+                res.sendServerError(`something went wrong ${error}`)
+            }
+        })
+
+        this.get('/passwordForget', ['PUBLIC'], (req, res) => {
+            try {
+                res.status(200).render('passwordForget');
+            }
+            catch (error) {
+                res.sendServerError(`something went wrong ${error}`)
+            }
+        })
+
+        this.get('/passwordReset/:id', ['PUBLIC'], (req, res) => {
+            try {
+                const productId = req.params.id;
+                const currentTimestamp = new Date().getTime();
+
+                if (req.session && req.session.expirationTime && currentTimestamp > req.session.expirationTime) {
+                    res.status(200).redirect('/passwordForget')
+                  } else {
+                    res.status(200).render('passwordReset');
+                  }
+            }
+            catch (error) {
+                res.sendServerError(`something went wrong ${error}`)
+            }
+        })
+
         this.get('/loggerTest/:tipo', ['PUBLIC'], (req, res) => {
             try {
                 const loggerType = req.params.tipo;

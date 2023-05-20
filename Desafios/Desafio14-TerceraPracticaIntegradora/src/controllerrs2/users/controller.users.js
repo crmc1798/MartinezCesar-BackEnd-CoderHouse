@@ -1,5 +1,6 @@
 const passport = require('passport');
-
+const { UserManager } = require('../../dao/mongoClassManagers/userClass/userMongoManager');
+const userBD = new UserManager();
 const Route = require("../../router/Class.Router");
 
 class UsersRouter extends Route {
@@ -16,6 +17,28 @@ class UsersRouter extends Route {
 
     this.get('/failRegister', ['PUBLIC'],  (req, res) => {
   res.send({ error: 'Falló el registro' });
+  })
+
+  this.get('/premium/:email', ['PUBLIC'], async (req, res) => {
+    try {
+      const email = req.params.email;
+      const user = await userBD.findUser(email);
+      console.log(user.role)
+      if(user.role == 'USER'){
+        await userBD.updateRole(email, 'PREMIUM');
+        res.send({ message: 'Usuario actualizado' });
+      }
+      else if(user.role == 'PREMIUM'){
+        await userBD.updateRole(email, 'USER');
+        res.send({ message: 'Usuario actualizado' });
+      }
+      else{
+        res.send({ message: 'Usuario No actualizado' });
+      }
+    } 
+    catch (error) {
+      res.sendServerError(`something went wrong ${error}`)
+    }
   })
   }
 }
