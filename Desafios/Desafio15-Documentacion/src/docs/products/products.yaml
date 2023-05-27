@@ -1,0 +1,11 @@
+paths:
+  /api/products:
+    get:
+      sumary: 'Obtiene github'
+      tags:
+        - Users
+      responses:
+        "200":
+          description: respuesta satisfactoria
+        "500":
+          description: respuesta insatisfactoria
