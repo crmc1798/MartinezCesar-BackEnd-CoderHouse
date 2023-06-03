@@ -3,17 +3,17 @@ paths:
     get:
       tags:
         - Carts
-      summary: Get all products
-      description: Show all available products 
+      summary: Get all carts
+      description: Show all available carts 
       responses:
         "200":
-          description: All products were delivered
+          description: All carts were delivered
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#components/schemas/Product' 
+                  $ref: '#components/schemas/Cart' 
         "400":
           description: Bad request
         "401":
@@ -23,38 +23,30 @@ paths:
         "500":
           description: Server error
     post:
-      security: 
-        - cookieAuth: []
       tags:
        - Carts
-      summary: Post a new product
-      description: Post a product that you want to sell
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#components/requestBodies/Product"
+      summary: Post a new cart
+      description: Post a carts that you want to save
   /api/carts/{pid}:
     get:
       tags:
         - Carts
-      summary: Get a product by its id
-      description: Show just a product found out by its id
+      summary: Get a cart by its id
+      description: Show just a cart found out by its id
       parameters:
       - name: pid
         in: path
         required: true
-        description: Product id to find it
+        description: Cart id to find it
         schema:
           $type: String
       responses:
         "200":
-          description: The product was delivered
+          description: The cart was delivered
           content:
             application/json:
               schema:
-                $ref: "#components/schemas/Product"
+                $ref: "#components/schemas/Cart"
         "400":
           description: Bad request
         "401":
@@ -64,17 +56,15 @@ paths:
         "500":
           description: Server error
     put:
-      security:
-        - cookieAuth: []
       tags:
         - Carts
-      summary: Upgrade a product
-      description: Update a product with its id
+      summary: Upgrade a cart
+      description: Update a cart with its id
       parameters:
       - name: pid
         in: path
         required: true
-        description: Product id to find and update it
+        description: Cart id to find and update it
         schema:
           $type: string
       requestBody:
@@ -82,30 +72,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#components/requestBodies/Product"
+              $ref: "#components/requestBodies/Cart"
       responses:
         "200":
-          description: The product was updated
+          description: The cart was updated
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  acknowledged: 
-                    type: string
-                    example: true
-                  modifiedCount:
-                    type: number
-                    example: 1
-                  upsertedId:
-                    type: string
-                    example: null
-                  upsertedCount:
-                    type: number
-                    example: 0
-                  matchedCount:
-                    type: number
-                    example: 1
         "400":
           description: Bad request
         "401":
@@ -115,42 +88,20 @@ paths:
         "500":
           description: Server error
     delete:
-      security: 
-        - cookieAuth: []
       tags:
         - Carts
-      summary: Delete a product
-      description: Delete a product with its id
+      summary: Delete a cart
+      description: Delete a cart with its id
       parameters:
       - name: pid
         in: path
         required: true
-        description: Product id to find and delete it
+        description: Cart id to find and delete it
         schema:
           $type: string
       responses:
         "200":
-          description: The product was deleted
-          # content:
-          #   application/json:
-          #     schema:
-          #       type: object
-          #       properties:
-          #         acknowledged: 
-          #           type: string
-          #           example: true
-          #         modifiedCount:
-          #           type: number
-          #           example: 1
-          #         upsertedId:
-          #           type: string
-          #           example: null
-          #         upsertedCount:
-          #           type: number
-          #           example: 0
-          #         matchedCount:
-          #           type: number
-          #           example: 1
+          description: The cart was deleted
         "400":
           description: Bad request
         "401":
@@ -159,7 +110,120 @@ paths:
           description: Forbidden, user not authorized
         "500":
           description: Server error
-
+  /api/carts/{cid}/products/{pid}:
+    post:
+      tags:
+        - Carts
+      summary: Get a cart by its id
+      description: Show just a cart found out by its id
+      parameters:
+      - name: pid
+        in: path
+        required: true
+        description: Product id to find it
+        schema:
+          $type: String
+      - name: cid
+        in: path
+        required: true
+        description: Cart id to find it
+        schema:
+          $type: String
+      responses:
+        "200":
+          description: The cart was posted
+        "400":
+          description: Bad request
+        "401":
+          description: Not authenticated
+        "403":
+          description: Forbidden, user not authorized
+        "500":
+          description: Server error
+    put:
+      tags:
+        - Carts
+      summary: Upgrade a cart
+      description: Update a cart with its id
+      parameters:
+      - name: pid
+        in: path
+        required: true
+        description: Product id to find it
+        schema:
+          $type: String
+      - name: cid
+        in: path
+        required: true
+        description: Cart id to find it
+        schema:
+          $type: String
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies2/Cart"
+      responses:
+        "200":
+          description: The cart was updated
+          content:
+            application/json:
+              schema:
+        "400":
+          description: Bad request
+        "401":
+          description: Not authenticated
+        "403":
+          description: Forbidden, user not authorized
+        "500":
+          description: Server error
+    delete:
+      tags:
+        - Carts
+      summary: Delete a cart
+      description: Delete a cart with its id
+      parameters:
+      - name: pid
+        in: path
+        required: true
+        description: Product id to find it
+        schema:
+          $type: String
+      - name: cid
+        in: path
+        required: true
+        description: Cart id to find it
+        schema:
+          $type: String
+      responses:
+        "200":
+          description: The cart was deleted
+        "400":
+          description: Bad request
+        "401":
+          description: Not authenticated
+        "403":
+          description: Forbidden, user not authorized
+        "500":
+          description: Server error
+  /api/carts/{cid}/purchase:
+    get:
+      tags:
+        - Carts
+      summary: Get purchase id cart
+      description: Purchase id cart 
+      responses:
+        "200":
+          description: Purchase id cart  were delivered
+        "400":
+          description: Bad request
+        "401":
+          description: Not authenticated
+        "403":
+          description: Forbidden, user not authorized
+        "500":
+          description: Server error
 components:
   schemas:
     Cart:
@@ -167,67 +231,24 @@ components:
       properties:
         _id:
           type: ObjectId
-          example: jahsasndod
-        id:
+          example: 63f937f964537d9ae62d015b
+        products:
+          type: array
+          example: [{"product": {"_id": "63ed6f052c4930c20f2e0472","title": "Trustmaster TMX","price": 2000},"quantity": 304,"_id": "63f9478872009f99292ea711"},{"product": {"_id": "63ed6f672c4930c20f2e0490","title": "logitech g29 v2","price": 9000},"quantity": 900,"_id": "63fa384e570a009fcdf61bf6"}]
+        __v:
           type: integer
-          example: 5
-        title:
-          type: string
-          example: galletas
-        description:
-          type: string
-          example: de arroz
-        price:
-          type: integer
-          example: 48
-        thumbail:
-          type: string
-          example: url1
-        code:
-          type: integer
-          example: 111
-        stock:
-          type: integer
-          example: 1
-        status:
-          type: string
-          enum:
-            - true
-            - false
-          example: true
-        category:
-          type: string
-          example: comida
-        owner:
-          type: string
-          example: example@example.com
+          example: 0
   requestBodies:
-    Product:
+    Cart:
       type: object
       properties:
-        title:
-          type: string
-          example: teclado
-        description:
-          type: string
-          example: periféricos para PC
-        price:
-          type: number
+        products:
+          type: aray
+          example: [{"product": "63ed6ef62c4930c20f2e046e","quantity": 1},{"product": "63ed6f052c4930c20f2e0472","quantity": 1},{"product": "63ed6f672c4930c20f2e0490","quantity": 1}]
+  requestBodies2:
+    Cart:
+      type: object
+      properties:
+        quantity:
+          type: integer
           example: 500
-        thumbail:
-          type: string
-          example: url
-        code:
-          type: number
-          example: 123
-        stock:
-          type: number
-          example: 3
-        category:
-          type: string
-          example: computación
-  securitySchemes: 
-    cookieAuth: 
-      type: apiKey
-      in: cookie
-      name: jwt

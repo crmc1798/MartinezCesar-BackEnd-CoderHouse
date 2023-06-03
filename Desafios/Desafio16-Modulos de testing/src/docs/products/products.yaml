@@ -23,8 +23,6 @@ paths:
         "500":
           description: Server error
     post:
-      security: 
-        - cookieAuth: []
       tags:
        - Products
       summary: Post a new product
@@ -64,11 +62,9 @@ paths:
         "500":
           description: Server error
     put:
-      security:
-        - cookieAuth: []
       tags:
         - Products
-      summary: Upgrade a product
+      summary: Upgrade a product by its id
       description: Update a product with its id
       parameters:
       - name: pid
@@ -86,26 +82,6 @@ paths:
       responses:
         "200":
           description: The product was updated
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  acknowledged: 
-                    type: string
-                    example: true
-                  modifiedCount:
-                    type: number
-                    example: 1
-                  upsertedId:
-                    type: string
-                    example: null
-                  upsertedCount:
-                    type: number
-                    example: 0
-                  matchedCount:
-                    type: number
-                    example: 1
         "400":
           description: Bad request
         "401":
@@ -115,11 +91,9 @@ paths:
         "500":
           description: Server error
     delete:
-      security: 
-        - cookieAuth: []
       tags:
         - Products
-      summary: Delete a product
+      summary: Delete a product by its id
       description: Delete a product with its id
       parameters:
       - name: pid
@@ -131,26 +105,23 @@ paths:
       responses:
         "200":
           description: The product was deleted
-          # content:
-          #   application/json:
-          #     schema:
-          #       type: object
-          #       properties:
-          #         acknowledged: 
-          #           type: string
-          #           example: true
-          #         modifiedCount:
-          #           type: number
-          #           example: 1
-          #         upsertedId:
-          #           type: string
-          #           example: null
-          #         upsertedCount:
-          #           type: number
-          #           example: 0
-          #         matchedCount:
-          #           type: number
-          #           example: 1
+        "400":
+          description: Bad request
+        "401":
+          description: Not authenticated
+        "403":
+          description: Forbidden, user not authorized
+        "500":
+          description: Server error
+  /api/products/mockingproducts:
+    get:
+      tags:
+        - Products
+      summary: Generates a template with 100 elements
+      description: Show all generates elements 
+      responses:
+        "200":
+          description: All generates elements
         "400":
           description: Bad request
         "401":
@@ -167,25 +138,22 @@ components:
       properties:
         _id:
           type: ObjectId
-          example: jahsasndod
-        id:
-          type: integer
-          example: 5
+          example: 63ed6ef62c4930c20f2e046e
         title:
           type: string
-          example: galletas
+          example: Trustmaster t150
         description:
           type: string
-          example: de arroz
+          example: Gaming Steering Wheel
         price:
           type: integer
-          example: 48
+          example: 1000
         thumbail:
           type: string
-          example: url1
+          example: ["url prueba"]
         code:
           type: integer
-          example: 111
+          example: A-0010-Z
         stock:
           type: integer
           example: 1
@@ -197,7 +165,7 @@ components:
           example: true
         category:
           type: string
-          example: comida
+          example: PS
         owner:
           type: string
           example: example@example.com
@@ -207,27 +175,25 @@ components:
       properties:
         title:
           type: string
-          example: teclado
+          example: Titulo prueba
         description:
           type: string
-          example: periféricos para PC
+          example: Descripcion prueba
         price:
           type: number
           example: 500
         thumbail:
           type: string
-          example: url
+          example: ["url prueba"]
         code:
           type: number
-          example: 123
+          example: A-prueba-Z
         stock:
           type: number
-          example: 3
+          example: 999
+        status:
+          type: boolean 
+          example: true
         category:
           type: string
-          example: computación
-  securitySchemes: 
-    cookieAuth: 
-      type: apiKey
-      in: cookie
-      name: jwt
+          example: Categoria prueba
